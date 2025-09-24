@@ -42,6 +42,8 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <head>
+        <meta name="color-scheme" content="light" />
+        <meta name="supported-color-schemes" content="light" />
         <style dangerouslySetInnerHTML={{ __html: COLORS_ROOT_STYLE }} />
       </head>
       <body
@@ -51,6 +53,7 @@ export default function RootLayout({
           display: "flex",
           flexDirection: "column",
           position: "relative",
+          colorScheme: "dark",
         }}
       >
         <ModalProvider>
