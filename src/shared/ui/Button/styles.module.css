@@ -1,0 +1,224 @@
+.button {
+    display: inline-flex;
+    justify-content: center;
+    font-size: 14px;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.txt {
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.button.primary {
+    background-color: var(--color-primary);
+    color: #ffffff;
+}
+
+.button.primary:hover:not(:global(.vibration-page) .button.primary) {
+    background-color: var(--color-primaryHover);
+}
+
+.button.violet {
+    background: linear-gradient(200deg, #5355EE 43.71%, #1B1B43 132.99%);
+    color: #ffffff;
+    background-size: 200% 100%;
+    background-position: 0% 50%;
+    transition: background-position 0.5s ease;
+}
+
+.button.violet:hover {
+    background-position: 100% 50%;
+}
+
+.button.secondary {
+    background-color: #eaeaea;
+    color: #000000;
+}
+
+.button.secondary:hover {
+    background-color: #cacaca;
+}
+
+.button:disabled {
+    background-color: #f0f0f0;
+    color: #a0a0a0;
+    cursor: not-allowed;
+}
+
+.button.stroke {
+    position: relative;
+    padding: 8px 30px;
+    background-color: transparent;
+    color: var(--color-paper);
+    border: 1px solid rgba(204, 204, 204, 0.40);
+    border-radius: 50px;
+    transition: all .3s;
+    font-size: 16px;
+}
+
+.button.stroke::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: inherit;
+    background: linear-gradient(75deg, #00B98C 24.39%, #00533F 170.64%);
+    opacity: 0;
+    transition: all .3s;
+}
+
+.button.stroke:hover {
+    border-color: transparent;
+}
+
+.button.stroke:hover::before {
+    opacity: 1;
+}
+
+.button.arrowFillLight {
+    padding: 8px 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 60px;
+    background: linear-gradient(252deg, #CCC 37.41%, #666 262.07%);
+}
+
+.button.arrowFillLight span {
+    background: linear-gradient(32deg, #00B98C -55.63%, #00533F 150.37%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.button.arrowFillLight:hover {
+    color: var(--color-primaryHover);
+}
+
+.button.arrowFillLight:hover svg {
+    transform: translateX(5px);
+}
+
+.button.strokeViolet {
+    position: relative;
+    padding: 8px 30px;
+    background-color: transparent;
+    color: var(--color-paper);
+    border: 1px solid rgba(204, 204, 204, 0.40);
+    border-radius: 50px;
+    transition: all .3s;
+    font-size: 16px;
+    overflow: hidden;
+}
+
+.button.strokeViolet::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: inherit;
+    background: linear-gradient(200deg, #5355EE 43.71%, #1B1B43 132.99%);
+    background-size: 200% 100%;
+    background-position: 0% 50%;
+    opacity: 0;
+    transition: background-position 0.5s ease, opacity 0.3s;
+    z-index: 0;
+}
+
+.button.strokeViolet:hover {
+    border-color: transparent;
+}
+
+.button.strokeViolet:hover::before {
+    opacity: 1;
+    background-position: 100% 50%;
+}
+
+.button.strokeViolet .txt {
+    position: relative;
+    z-index: 1;
+}
+
+@media(max-width:767px) {
+    .button.stroke {
+        font-size: 14px;
+        display: inline-flex;
+        width: auto;
+        padding: 8px 24px;
+    }
+
+    .button.strokeViolet {
+        font-size: 14px;
+        display: inline-flex;
+        width: auto;
+        padding: 8px 24px;
+    }
+}
+
+:global(.vibration-page) .button.primary {
+    background: linear-gradient(200deg, #5355EE 43.71%, #1B1B43 132.99%);
+    color: #ffffff;
+    background-size: 200% 100%;
+    background-position: 0% 50%;
+    transition: background-position 0.5s ease;
+}
+
+:global(.vibration-page) .button.primary:hover {
+    background-position: 100% 50%;
+}
+
+:global(.vibration-page) .button.stroke {
+    position: relative;
+    padding: 8px 30px;
+    background-color: transparent;
+    color: var(--color-paper);
+    border: 1px solid rgba(204, 204, 204, 0.40);
+    border-radius: 50px;
+    transition: all .3s;
+    font-size: 16px;
+    overflow: hidden;
+}
+
+:global(.vibration-page) .button.stroke::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: inherit;
+    background: linear-gradient(200deg, #5355EE 43.71%, #1B1B43 132.99%);
+    background-size: 200% 100%;
+    background-position: 0% 50%;
+    opacity: 0;
+    transition: background-position 0.5s ease, opacity 0.3s;
+    z-index: 0;
+}
+
+:global(.vibration-page) .button.stroke:hover {
+    border-color: transparent;
+}
+
+:global(.vibration-page) .button.stroke:hover::before {
+    opacity: 1;
+    background-position: 100% 50%;
+}
+
+:global(.vibration-page) .button.stroke .txt {
+    position: relative;
+    z-index: 1;
+}

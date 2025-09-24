@@ -1,0 +1,259 @@
+.section {
+    padding-top: 140px;
+    padding-bottom: 100px;
+    background: linear-gradient(66deg, #8F6ED4 0%, #5355EE 100%);
+    overflow: hidden;
+}
+
+.header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+
+.body {
+    margin-top: 60px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+}
+
+.bodyBgImg {
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    transition: opacity 0.6s, transform 0.6s;
+    flex-basis: 50%;
+}
+
+.bodyAfterHidden::after {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.bodyAfterVisible::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.lastBtns {
+    margin-left: auto;
+}
+
+.lastBtns button {
+    white-space: nowrap;
+}
+
+.logo {
+    color: #EDEDED;
+    font-family: var(--font-unbounded), sans-serif;
+    text-transform: uppercase;
+    color: #EDEDED;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.p {
+    max-width: 1120px;
+    margin-top: 20px;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 130%;
+}
+
+.arrowBack {
+    transform: rotate(180deg);
+}
+
+.arrowBack path {
+    stroke: #fff;
+}
+
+.cardsTableWrapper {
+    flex-basis: 50%;
+    position: relative;
+}
+
+.cardsVisible,
+.tableVisible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition: opacity 0.5s, transform 0.5s;
+    width: 100%;
+    height: 100%;
+}
+
+
+.cardsHidden,
+.tableHidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(40px);
+    transition: opacity 0.5s, transform 0.5s;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+.tableHeader {
+    font-size: 24px;
+    font-weight: 600;
+    color: #040404;
+}
+
+.tableCard {
+    border-radius: 30px;
+    padding: 30px;
+    background-color: #fff;
+    color: #040404;
+
+}
+
+.techTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+
+.techTable .tr:not(:last-child) {
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.20);
+}
+
+.techTable tr:not(:last-child) td {
+    border-bottom: 1px solid #0404042d;
+}
+
+.td {
+    width: 50%;
+    height: 40px;
+}
+
+.td:first-child {
+    font-weight: 400;
+    line-height: normal;
+    opacity: .6;
+}
+
+.td:last-child {
+    padding-left: 5px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.fadeIn {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fadeOut {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.tab {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(225deg, #CCC 0%, #666 100%);
+    transition: all .3s;
+    pointer-events: all;
+}
+
+.tab:hover {
+    background: linear-gradient(200deg, #5355EE 43.71%, #1B1B43 132.99%);
+}
+
+.arrow path {
+    transition: all .3s;
+}
+
+.tab:hover .arrow path {
+    stroke: #fff;
+}
+
+.tabActive {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.arrowLeft {
+    transform: rotate(180deg);
+}
+
+@media(max-width:1023px) {
+    .section {
+        padding: 60px 0 0;
+    }
+
+
+    .body {
+        flex-direction: column;
+    }
+
+    .tabs {
+        position: absolute;
+        left: 0;
+        top: -70px;
+        left: auto;
+    }
+
+    .lastBtns {
+        width: 100%;
+        margin-right: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: auto;
+        padding-left: 0;
+    }
+
+    .btnBack {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    .logo {
+        font-size: 32px;
+    }
+
+    .cardsVisible,
+    .tableVisible {
+        position: relative;
+    }
+
+    .header {
+        flex-direction: column;
+    }
+
+    .cardsTableWrapper {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .body:after {
+        display: none;
+    }
+}

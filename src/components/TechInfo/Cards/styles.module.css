@@ -1,0 +1,145 @@
+.item {
+    position: relative;
+    background-image: url('/img/vibration/techData/cards/5.png');
+    background-size: cover;
+    background-position: 50% 50%;
+    border-radius: 20px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    justify-content: space-between;
+    color: #040404;
+    background: linear-gradient(0deg, #EDEDED 0%, #EDEDED 100%), linear-gradient(180deg, #191919 0%, #0F0F0F 102.14%);
+    border: 1px solid #EDEDED;
+    transition: all 0.6s;
+}
+
+
+.top {
+    position: relative;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%;
+}
+
+.featureSub,
+.bottom {
+    position: relative;
+    z-index: 2;
+    font-size: 20px;
+    color: rgba(4, 4, 4, 0.60);
+    line-height: 1.1;
+    font-weight: 400;
+}
+
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.item_blue {
+    color: #fff;
+    background-color: transparent;
+    background-image: none;
+}
+
+.item_blue .bottom,
+.item_blue .featureSub {
+    color: #ededed9b;
+}
+
+.xyz {
+    color: rgba(204, 204, 204, 0.70);
+    font-family: Jost;
+    font-size: 32px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 110%;
+}
+
+.row1 {
+    width: 100%;
+    display: flex;
+    gap: 30px;
+}
+
+.row1 .item {
+    flex-basis: 25%;
+}
+
+.row1 .item:nth-child(2) {
+    flex-basis: 50%;
+}
+
+.row2 {
+    display: flex;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.row2 .item {
+    flex-basis: 50%;
+}
+
+.row3 {
+    display: flex;
+    gap: 30px;
+}
+
+.row3 .item {
+    flex-basis: 30%;
+}
+
+.row3 .item:nth-child(3) {
+    flex-basis: 40%;
+}
+
+/* Селекторы с повышенной специфичностью */
+.row1.row1Extra .item:nth-child(1) {
+    flex-basis: 20% !important;
+}
+
+.row1.row1Extra .item:nth-child(2) {
+    flex-basis: 80% !important;
+}
+
+.row2.row2Extra .item {
+    flex-basis: 50% !important;
+}
+
+.row3.row3Extra .item:nth-child(1) {
+    flex-basis: 30% !important;
+}
+
+.row3.row3Extra .item:nth-child(2) {
+    flex-basis: 30% !important;
+}
+
+.row3.row3Extra .item:nth-child(3) {
+    flex-basis: 40% !important;
+}
+
+.row3ExtraItem3 {
+    flex-basis: 40%;
+}
+
+.animateWave {
+    z-index: 2;
+    transform: translateY(-16px) scale(1.01);
+    box-shadow: 0 8px 32px 0 rgba(83, 85, 238, 0.18);
+    transition:
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        flex-basis 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media(max-width:620px) {
+
+    .row1,
+    .row2,
+    .row3 {
+        flex-direction: column;
+    }
+}

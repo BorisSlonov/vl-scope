@@ -1,0 +1,83 @@
+.card {
+    width: 100%;
+    position: relative;
+    border-radius: 30px;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* Базовый стиль блика */
+.glare {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    transform: translateX(var(--glare-x, 0)) translateY(var(--glare-y, 0));
+    transition: transform 0.2s ease-out;
+}
+
+/* ===== Позиции бликов (по data-атрибутам) ===== */
+
+.glare[data-glare-position="top"] {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.glare[data-glare-position="bottom"] {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.glare[data-glare-position="left"] {
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.glare[data-glare-position="right"] {
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.glare[data-glare-position="topLeft"] {
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.glare[data-glare-position="topRight"] {
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.glare[data-glare-position="bottomLeft"] {
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.glare[data-glare-position="bottomRight"] {
+    bottom: 0;
+    right: 0;
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0.1), transparent);
+}
