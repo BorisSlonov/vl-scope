@@ -1,13 +1,68 @@
 .section {
-    background-image: url(/landing_indicator/bg1.png);
-    background-size: cover;
-    background-position: center;
+    overflow: hidden;
+    position: relative;
     padding-top: 80px;
     position: relative;
 }
 
+.section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url(/landing_indicator/bg1.png);
+    background-size: cover;
+    background-position: center;
+    z-index: 0; /* keep below content */
+    /* hidden by default, will slide up on animate */
+    transform: translateY(100%);
+}
+
+/* staged animations */
+.item_top,
+.item_bot {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.anim .item_top {
+    animation: fadeUp .6s ease forwards;
+}
+
+.anim .item_bot {
+    animation: fadeUp .6s ease forwards .6s;
+}
+
+.anim.section::before,
+.section.anim::before {
+    animation: riseIn .8s ease forwards 1.2s;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes riseIn {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
 
 .body {
+    position: relative;
+    z-index: 1; /* ensure content stays above ::before */
     min-height: calc(100vh - 80px);
     padding: 40px 0;
     display: flex;

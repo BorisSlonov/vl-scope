@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./styles.module.css";
 import clsx from "clsx";
 import Link from "next/link";
@@ -15,8 +16,30 @@ const LandingIntro = () => {
     { text: "Виброналадка", link: "/docs/VL-05_Виброналадка.pdf" },
   ];
 
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setActive(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className={styles.section}>
+    <section
+      ref={sectionRef}
+      className={clsx(styles.section, active && styles.anim)}
+    >
       <div className="container">
         <div className={styles.body}>
           <div className={clsx(styles.item, styles.item_top)}>
