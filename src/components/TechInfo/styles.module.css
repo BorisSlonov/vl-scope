@@ -17,7 +17,7 @@
 .body {
     margin-top: 60px;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 30px;
     position: relative;
 }
@@ -74,6 +74,29 @@
 
 .arrowBack path {
     stroke: #fff;
+}
+
+.bodyImgWrapper {
+    flex-basis: 50%;
+    position: relative;
+    background-color: #fff;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.bodyImgWrapper>img {
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    transform: scale(3);
+}
+
+@media(max-width:1240px) {
+    .bodyImgWrapper>img {
+        bottom: 30%;
+    }
 }
 
 .cardsTableWrapper {
@@ -212,6 +235,7 @@
     .body {
         flex-direction: column;
     }
+
 
     .tabs {
         position: absolute;

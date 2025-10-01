@@ -133,7 +133,7 @@ const TechInfo = () => {
               alt="вибро-скоуп"
               width={645}
               height={645}
-              className={[styles.bodyBgImg, styles.fadeIn].join(" ")}
+              className={styles.bodyBgImg}
               priority
             />
           </div>
