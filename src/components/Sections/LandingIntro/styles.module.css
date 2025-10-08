@@ -12,9 +12,10 @@
     background-image: url(/landing_indicator/bg1.png);
     background-size: cover;
     background-position: center;
-    z-index: 0; /* keep below content */
+    z-index: 0;
+    opacity: 0;
+    /* keep below content */
     /* hidden by default, will slide up on animate */
-    transform: translateY(100%);
 }
 
 /* staged animations */
@@ -40,29 +41,28 @@
 @keyframes fadeUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
     }
 }
 
 @keyframes riseIn {
     from {
-        transform: translateY(100%);
+        opacity: 0;
     }
 
     to {
-        transform: translateY(0);
+        opacity: 1;
     }
 }
 
 
 .body {
     position: relative;
-    z-index: 1; /* ensure content stays above ::before */
+    z-index: 1;
+    /* ensure content stays above ::before */
     min-height: calc(100vh - 80px);
     padding: 40px 0;
     display: flex;
