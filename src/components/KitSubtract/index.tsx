@@ -224,7 +224,7 @@ const KitSubtract = () => {
                 key={it.key}
                 title={it.title}
                 count={it.count}
-                side={it.side}
+                side={isCompact ? "center" : it.side}
                 appear={appear}
                 style={(isCompact ? (centerStyle as any) : (it.cardStyle as any))}
                 active={isActive}

@@ -32,6 +32,7 @@
   left: 50%;
   top: 50%;
   will-change: transform;
+  z-index: 1;
 }
 
 .kitImg {
@@ -58,11 +59,12 @@
   position: absolute;
   display: flex;
   align-items: center;
-  width: 450px;
+  width: min(458px, 90vw);
   height: 88px;
   padding: 8px 16px;
   color: #fff;
   transition: all 400ms ease;
+  z-index: 3;
 }
 
 .cardBg {
@@ -106,6 +108,7 @@
   transform: translateX(-50%);
   height: 400px;
   top: 0;
+  z-index: 2;
 }
 
 .dot {
