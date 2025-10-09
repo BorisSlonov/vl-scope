@@ -3,10 +3,11 @@
   position: relative;
   height: 600vh;
   /* long scroll to play the sequence */
-  background-color: #040404
+  background-color: #040404;
 }
 
 .circlesShade {
+  overflow: hidden;
   position: absolute;
   top: 0;
   left: 0;
