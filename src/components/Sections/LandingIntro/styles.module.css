@@ -3,6 +3,7 @@
     position: relative;
     padding-top: 80px;
     position: relative;
+    background-color: #000;
 }
 
 .section::before {
@@ -12,10 +13,23 @@
     background-image: url(/landing_indicator/bg1.png);
     background-size: cover;
     background-position: center;
-    z-index: 0;
+    z-index: 2;
     opacity: 0;
-    /* keep below content */
-    /* hidden by default, will slide up on animate */
+
+
+
+}
+
+.circleShade {
+    position: absolute;
+    right: 15%;
+    border-radius: 996px;
+    background: linear-gradient(66deg, #8F6ED4 0%, #5355EE 100%);
+    filter: blur(150px);
+    width: 900px;
+    height: 900px;
+    z-index: 1;
+
 }
 
 /* staged animations */
@@ -61,9 +75,8 @@
 
 .body {
     position: relative;
-    z-index: 1;
-    /* ensure content stays above ::before */
-    min-height: calc(100vh - 80px);
+    z-index: 3;
+    min-height: calc(100svh - 80px);
     padding: 40px 0;
     display: flex;
     flex-direction: column;
@@ -173,8 +186,8 @@
     .item_top {
         position: relative;
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        align-items: flex-start;
+        text-align: left;
         gap: 10px;
         margin-top: 20px;
     }
@@ -182,10 +195,19 @@
     .a {
         position: relative;
         margin-bottom: 20px;
-        margin-right: auto;
+        margin: 0;
     }
 
     .body {
-        padding: 40px 0;
+        padding: 0;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    .section::before {
+        height: 120%;
+        margin-top: 80px;
+        margin-left: -100px;
     }
 }

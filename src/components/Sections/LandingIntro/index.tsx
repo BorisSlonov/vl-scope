@@ -40,6 +40,7 @@ const LandingIntro = () => {
       ref={sectionRef}
       className={clsx(styles.section, active && styles.anim)}
     >
+      <div className={styles.circleShade}></div>
       <div className="container">
         <div className={styles.body}>
           <div className={clsx(styles.item, styles.item_top)}>

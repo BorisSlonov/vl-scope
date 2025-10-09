@@ -15,7 +15,9 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  /* Use stable viewport height to avoid jumps from mobile browser UI bars */
+  min-height: var(--app-100vh, 100vh);
+  min-height: 100svh;
   align-items: center;
   background: var(--dark, #040404);
 }

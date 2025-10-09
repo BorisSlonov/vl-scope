@@ -90,12 +90,12 @@
     left: 0;
     right: 0;
     width: 100%;
-    transform: scale(1);
+    transform: scale(3) translateY(-40px);
 }
 
 @media(max-width:1240px) {
     .bodyImgWrapper>img {
-        bottom: 30%;
+        bottom: 10%;
     }
 }
 

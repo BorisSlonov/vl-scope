@@ -1,138 +1,153 @@
+/* Scroll-sequenced Kit section */
 .section {
-    position: relative;
-    overflow: hidden;
-    padding: 120px 0;
+  position: relative;
+  height: 600vh;
+  /* long scroll to play the sequence */
+  background-color: rgba(95, 61, 186, 0.25);
 }
 
-.section::before {
-    content: '';
-    position: absolute;
-    top: 200px;
-    left: -550px;
-    width: 550px;
-    height: 550px;
-    box-shadow: 0 0 500px var(--color-primary);
-    background-repeat: no-repeat;
-    background-position: center;
-    object-fit: contain;
-    /* animation: gentle vertical float with opacity change */
-    animation: floatY 8s ease-in-out infinite;
+.scrollSpace {
+  /* for clarity; can tweak later */
+  height: 0;
 }
 
-.section::after {
-    content: '';
-    position: absolute;
-    bottom: 200px;
-    right: -590px;
-    width: 550px;
-    height: 550px;
-    box-shadow: 0 0 200px var(--color-primary);
-    background-repeat: no-repeat;
-    background-position: center;
-    object-fit: contain;
-    /* run same animation with offset for variety */
-    animation: floatY 8s ease-in-out infinite;
-    animation-delay: -4s;
+.sticky {
+  position: sticky;
+  top: 0;
+  /* Prefer stable viewport height; fallback to JS var for older browsers */
+  height: var(--app-100vh, 100vh);
+  height: 100svh;
+  overflow: clip;
 }
 
-@keyframes floatY {
-    0% {
-        transform: translateY(0);
-        opacity: 0.6;
-    }
-
-    50% {
-        transform: translateY(-20%);
-        opacity: 0.9;
-    }
-
-    100% {
-        transform: translateY(0);
-        opacity: 0.6;
-    }
+.centerArea {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-.wrapperContent {
-    position: relative;
-    z-index: 2;
+.kitWrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  will-change: transform;
 }
 
-.imgWrapper {
-    overflow: hidden;
+.kitImg {
+  width: 100%;
+  max-width: 590px;
+  margin-bottom: -500px;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
 }
 
-.h2 {
-    font-weight: 400;
+.line {
+  object-fit: contain;
+  position: absolute;
+  width: auto;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
 }
 
-.subtitle {
-    font-size: clamp(16px, 3vw, 20px);
-    margin-top: 20px;
+/* Cards */
+.card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 450px;
+  height: 88px;
+  padding: 8px 16px;
+  color: #fff;
+  transition: all 400ms ease;
 }
 
-.op06 {
-    opacity: 0.6;
+.cardBg {
+  position: absolute;
+  inset: 0;
+  background-image: url('/landing_indicator/kit/cardBg.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0.9;
 }
 
-.bold {
-    opacity: 0.8;
+.cardContent {
+  position: relative;
+  z-index: 2;
 }
 
-.body {
+.cardTitle {
+  font-size: clamp(14px, 2vw, 20px);
+  font-weight: 600;
+  background: linear-gradient(90deg, #666 -15.03%, #CCC 13.95%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cardCount {
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+/* Highlighting */
+.card.active {
+  filter: brightness(1.6);
+}
+
+/* Dots */
+.dotsWrapper {
+  position: absolute;
+  width: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 400px;
+  top: 0;
+}
+
+.dot {
+  border-radius: 50%;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-image: url('/landing_indicator/kit/dot.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 200ms ease, filter 200ms ease, opacity 200ms ease;
+}
+
+.dot:hover,
+.dot.active {
+  filter: drop-shadow(0 0 8px rgba(160, 120, 255, 0.9));
+}
+
+@media (max-width: 1024px) {
+  .section {
+    height: 450vh;
+  }
+
+  .card {
+    min-width: auto;
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    margin-top: 60px;
-    gap: 30px;
+    max-width: 80%;
+    height: 64px;
+  }
 }
 
-.prodName {
-    font-size: clamp(16px, 2vw, 32px);
-    margin-top: 10px;
-}
-
-.prodInfo {
-    font-size: clamp(14px, 1.5vw, 20px);
-    opacity: .6;
-}
-
-.img {
+@media(max-width:768px) {
+  .dotsWrapper {
+    height: 300px;
     width: 100%;
-    object-fit: contain;
-    object-position: center;
-}
+    top: -120px;
+  }
 
-@media(max-width:1440px) {
-    .body {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media(max-width:1024px) {
-    .body {
-        margin-top: 30px;
-        grid-template-columns: repeat(2, 1fr);
-
-    }
-
-
-}
-
-@media(max-width:767px) {
-    .section {
-        padding-top: 70px;
-    }
-
-    .body {
-        grid-template-columns: auto;
-        max-width: 350px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .section::after {
-        top: auto;
-        bottom: 200px;
-    }
-
+  .kitImg {
+    height: 400px;
+    scale: 2.5;
+  }
 }

@@ -6,6 +6,8 @@ import { Jost, Unbounded } from "next/font/google";
 import { COLORS_ROOT_STYLE } from "@/shared/config/colors";
 import { ModalProvider } from "./context/ModalContext";
 import Script from "next/script";
+import SmoothScroll from "@/components/SmoothScroll";
+import ViewportUnitsFix from "@/components/ViewportUnitsFix";
 
 const jost = Jost({ subsets: ["latin", "cyrillic"], display: "swap" });
 const unbounded = Unbounded({
@@ -56,6 +58,9 @@ export default function RootLayout({
           colorScheme: "dark",
         }}
       >
+        {/* Global helpers: fixed viewport height + Lenis */}
+        <ViewportUnitsFix />
+        <SmoothScroll />
         <ModalProvider>
           <Header />
           {children}

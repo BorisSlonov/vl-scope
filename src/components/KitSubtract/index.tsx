@@ -1,68 +1,218 @@
-import clsx from "clsx";
-import s from "./styles.module.css";
+"use client";
+
 import Image from "next/image";
-import { InViewStyle } from "@/shared/ui/InViewStyle";
+import { useEffect, useMemo, useRef, useState } from "react";
+import s from "./styles.module.css";
 import KitItemCard from "./KitItemCard";
-import AccesoriesSlider from "./AccesoriesSlider";
+
+type Side = "left" | "right" | "center";
+
+type Item = {
+  key: string;
+  title: string;
+  count: string;
+  side: Side;
+  cardStyle: React.CSSProperties;
+  dotStyle: React.CSSProperties;
+  appearAt: number; // 0..1
+};
+
+const items: Item[] = [
+  {
+    key: "usb",
+    title: "КАБЕЛЬ USB",
+    count: "1 шт.",
+    side: "left",
+    cardStyle: { top: "18%", left: "3%" },
+    dotStyle: { top: "50%", left: "5%" },
+    appearAt: 0.3,
+  },
+  {
+    key: "vibro",
+    title: "VIBRO-SCOPE",
+    count: "1 шт.",
+    side: "left",
+    cardStyle: { top: "36%", left: "3%" },
+    dotStyle: { top: "75%", left: "15%" },
+    appearAt: 0.38,
+  },
+  {
+    key: "magnet",
+    title: "МАГНИТ",
+    count: "1 шт.",
+    side: "left",
+    cardStyle: { top: "54%", left: "3%" },
+    dotStyle: { top: "91%", left: "15%" },
+    appearAt: 0.46,
+  },
+  {
+    key: "probe-small",
+    title: "ИЗМЕРИТЕЛЬНЫЙ ЩУП МАЛЫЙ",
+    count: "1 шт.",
+    side: "right",
+    cardStyle: { top: "22%", right: "3%" },
+    dotStyle: { top: "35%", left: "100%" },
+    appearAt: 0.54,
+  },
+  {
+    key: "probe-std",
+    title: "ИЗМЕРИТЕЛЬНЫЙ ЩУП СТАНДАРТНЫЙ",
+    count: "1 шт.",
+    side: "right",
+    cardStyle: { top: "40%", right: "3%" },
+    dotStyle: { top: "47%", left: "78%" },
+    appearAt: 0.62,
+  },
+  {
+    key: "charger",
+    title: "ЗАРЯДНОЕ УСТРОЙСТВО",
+    count: "1 шт.",
+    side: "right",
+    cardStyle: { top: "58%", right: "3%" },
+    dotStyle: { top: "97%", left: "72%" },
+    appearAt: 0.7,
+  },
+  {
+    key: "case",
+    title: "КЕЙС С ЛОЖЕМЕНТОМ",
+    count: "1 шт.",
+    side: "center",
+    cardStyle: { bottom: "4%", left: "50%", transform: "translateX(-50%)" },
+    dotStyle: { top: "110%", left: "50%", transform: "translateX(-50%)" },
+    appearAt: 0.78,
+  },
+];
 
 const KitSubtract = () => {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [activeKey, setActiveKey] = useState<string | undefined>();
+  const [isCompact, setIsCompact] = useState(false); // <=1359px
+  const skipClickRef = useRef(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const onScroll = () => {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const total = el.offsetHeight - vh; // scrollable distance of this section
+      const passed = Math.min(Math.max(vh - rect.top, 0), total);
+      const p = total > 0 ? passed / total : 0;
+      setProgress(Math.max(0, Math.min(1, p)));
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  const raiseY = useMemo(() => {
+    // pedestal + case rise in first 25% of the sequence
+    const t = Math.min(progress / 0.25, 1);
+    const start = 20; // vh down
+    const end = 0; // centered
+    return start * (1 - t) + end * t;
+  }, [progress]);
+
+  // track viewport for compact mode (<=1359px)
+  useEffect(() => {
+    const check = () => setIsCompact(window.innerWidth <= 1359);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   return (
-    <section className={s.section} id="kit">
-      <div className="container">
-        <div className={s.wrapperContent}>
-          <h2 className={clsx("h2", s.h2)}>комплектация</h2>
-          <p className={s.subtitle}>
-            <span className={s.op06}> Комплект VIBRO-SCOPE</span>{" "}
-            <span className={s.bold}>
-              имеет компактные размеры и поставляется в удобном кейсе{" "}
-            </span>
-            <span className={s.op06}> для переноски</span>
-          </p>
-          <div className={s.body}>
-            <KitItemCard
-              imgSrc="/landing_indicator/kit/1.png"
-              name="Базовый комплект /
-Кейс с ложементом"
-              info="1 шт."
-              itemClassName={s.item_1}
+    <section className={s.section} id="kit" ref={sectionRef}>
+      <div className={s.scrollSpace} />
+      <div className={s.sticky}>
+        <div className={s.centerArea}>
+          <div
+            className={s.kitWrap}
+            style={{
+              transform: `translate3d(-50%, calc(-50% + ${raiseY} * var(--app-1vh, 1vh)), 0)`,
+            }}
+          >
+            <Image
+              src="/landing_indicator/kit/kit.png"
+              alt="Комплект на пьедестале"
+              width={1200}
+              height={800}
+              priority
+              className={s.kitImg}
             />
-            <KitItemCard
-              imgSrc="/landing_indicator/kit/2.png"
-              name="VIBRO-SCOPE"
-              info="1 шт."
-              itemClassName={s.item_1}
-            />
-            <KitItemCard
-              imgSrc="/landing_indicator/kit/3.png"
-              name="Магнит"
-              info="1 шт."
-              itemClassName={s.item_2}
-            />
-            <KitItemCard
-              imgSrc="/landing_indicator/kit/4.png"
-              name="Стандартный щуп"
-              info="1 шт."
-              itemClassName={s.item_7}
-            />
-            <KitItemCard
-              imgSrc="/landing_indicator/kit/5.png"
-              name="Малый щуп"
-              info="1 шт."
-              itemClassName={s.item_3}
-            />
-            <KitItemCard
-              imgSrc="/landing_indicator/kit/6.png"
-              name="Адаптер"
-              info="1 шт."
-              itemClassName={s.item_4}
-            />
-            <KitItemCard
-              imgSrc="/landing_indicator/kit/7.png"
-              name="USB-кабель"
-              info="1 шт."
-              itemClassName={s.item_5}
-            />
+            <div className={s.dotsWrapper}>
+              {/* dots overlay */}
+              {items.map((it) => {
+                const appear = Math.max(
+                  0,
+                  Math.min(1, (progress - it.appearAt) / 0.08)
+                );
+                const isActive = activeKey === it.key;
+                return (
+                  <button
+                    key={`dot-${it.key}`}
+                    className={`${s.dot} ${isActive ? s.active : ""}`}
+                    style={{
+                      opacity: appear,
+                      transform: `translate(-50%, -50%) scale(${0.8 + 0.2 * appear})`,
+                      ...(it.dotStyle as any),
+                    }}
+                    // Desktop hover
+                    onMouseEnter={() => setActiveKey(it.key)}
+                    onMouseLeave={() => setActiveKey(undefined)}
+                    // Pointer and touch support (mobile hover simulation)
+                    onPointerEnter={() => setActiveKey(it.key)}
+                    onPointerLeave={() => setActiveKey(undefined)}
+                    onTouchStart={() => {
+                      skipClickRef.current = true;
+                      setActiveKey(it.key);
+                    }}
+                    onClick={(e) => {
+                      if (skipClickRef.current) {
+                        // prevent duplicate click after touch
+                        skipClickRef.current = false;
+                        return;
+                      }
+                      setActiveKey((k) => (k === it.key ? undefined : it.key));
+                    }}
+                    onFocus={() => setActiveKey(it.key)}
+                    onBlur={() => setActiveKey(undefined)}
+                    aria-label={it.title}
+                  />
+                );
+              })}
+            </div>
           </div>
+
+          {/* cards */}
+          {items.map((it) => {
+            const seqAppear = Math.max(
+              0,
+              Math.min(1, (progress - it.appearAt) / 0.08)
+            );
+            const appear = isCompact ? (activeKey === it.key ? 1 : 0) : seqAppear;
+            const isActive = activeKey === it.key;
+            const centerStyle = { left: "50%", top: "18%", transform: "translateX(-50%)" } as const;
+            return (
+              <KitItemCard
+                key={it.key}
+                title={it.title}
+                count={it.count}
+                side={it.side}
+                appear={appear}
+                style={(isCompact ? (centerStyle as any) : (it.cardStyle as any))}
+                active={isActive}
+                {...(!isCompact && { onEnter: () => setActiveKey(it.key), onLeave: () => setActiveKey(undefined) })}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
