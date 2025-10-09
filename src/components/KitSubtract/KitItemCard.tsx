@@ -20,6 +20,7 @@ const KitItemCard = ({ title, count, side, appear, style, active, onEnter, onLea
 
   return (
     <div
+      data-kit-interactive="true"
       className={`${s.card} ${active ? s.active : ""}`}
       style={{
         opacity: appear,

@@ -15,9 +15,10 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  /* Use stable viewport height to avoid jumps from mobile browser UI bars */
+  /* Fill visible viewport height (dynamic), with stable fallback */
+  min-height: calc(var(--app-1dvh, 1vh) * 100);
+  min-height: 100dvh;
   min-height: var(--app-100vh, 100vh);
-  min-height: 100svh;
   align-items: center;
   background: var(--dark, #040404);
 }

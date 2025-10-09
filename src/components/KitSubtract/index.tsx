@@ -89,6 +89,7 @@ const KitSubtract = () => {
   const [activeKey, setActiveKey] = useState<string | undefined>();
   const [isCompact, setIsCompact] = useState(false); // <=1359px
   const skipClickRef = useRef(false);
+  const centerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -128,15 +129,32 @@ const KitSubtract = () => {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // Close card on outside tap in compact mode
+  useEffect(() => {
+    if (!isCompact) return;
+    const onPointerDown = (e: Event) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      if (target.closest('[data-kit-interactive="true"]')) return;
+      setActiveKey(undefined);
+    };
+    document.addEventListener("pointerdown", onPointerDown, { passive: true });
+    document.addEventListener("touchstart", onPointerDown, { passive: true });
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown as any);
+      document.removeEventListener("touchstart", onPointerDown as any);
+    };
+  }, [isCompact]);
+
   return (
     <section className={s.section} id="kit" ref={sectionRef}>
       <div className={s.scrollSpace} />
       <div className={s.sticky}>
-        <div className={s.centerArea}>
+        <div className={s.centerArea} ref={centerRef}>
           <div
             className={s.kitWrap}
             style={{
-              transform: `translate3d(-50%, calc(-50% + ${raiseY} * var(--app-1vh, 1vh)), 0)`,
+              transform: `translate3d(-50%, calc(-50% + ${raiseY} * var(--app-1dvh, 1vh)), 0)`,
             }}
           >
             <Image
@@ -156,36 +174,37 @@ const KitSubtract = () => {
                 );
                 const isActive = activeKey === it.key;
                 return (
-                  <button
-                    key={`dot-${it.key}`}
-                    className={`${s.dot} ${isActive ? s.active : ""}`}
-                    style={{
-                      opacity: appear,
-                      transform: `translate(-50%, -50%) scale(${0.8 + 0.2 * appear})`,
-                      ...(it.dotStyle as any),
-                    }}
-                    // Desktop hover
-                    onMouseEnter={() => setActiveKey(it.key)}
-                    onMouseLeave={() => setActiveKey(undefined)}
-                    // Pointer and touch support (mobile hover simulation)
-                    onPointerEnter={() => setActiveKey(it.key)}
-                    onPointerLeave={() => setActiveKey(undefined)}
-                    onTouchStart={() => {
-                      skipClickRef.current = true;
-                      setActiveKey(it.key);
-                    }}
-                    onClick={(e) => {
-                      if (skipClickRef.current) {
-                        // prevent duplicate click after touch
-                        skipClickRef.current = false;
-                        return;
-                      }
-                      setActiveKey((k) => (k === it.key ? undefined : it.key));
-                    }}
-                    onFocus={() => setActiveKey(it.key)}
-                    onBlur={() => setActiveKey(undefined)}
-                    aria-label={it.title}
-                  />
+              <button
+                key={`dot-${it.key}`}
+                className={`${s.dot} ${isActive ? s.active : ""}`}
+                style={{
+                  opacity: appear,
+                  transform: `translate(-50%, -50%) scale(${0.8 + 0.2 * appear})`,
+                  ...(it.dotStyle as any),
+                }}
+                data-kit-interactive="true"
+                // Desktop hover
+                onMouseEnter={!isCompact ? () => setActiveKey(it.key) : undefined}
+                onMouseLeave={!isCompact ? () => setActiveKey(undefined) : undefined}
+                // Pointer and touch support (mobile hover simulation)
+                onPointerEnter={() => setActiveKey(it.key)}
+                onPointerLeave={!isCompact ? () => setActiveKey(undefined) : undefined}
+                onTouchStart={() => {
+                  skipClickRef.current = true;
+                  setActiveKey((k) => (k === it.key ? undefined : it.key));
+                }}
+                onClick={() => {
+                  if (skipClickRef.current) {
+                    // prevent duplicate click after touchstart
+                    skipClickRef.current = false;
+                    return;
+                  }
+                  setActiveKey((k) => (k === it.key ? undefined : it.key));
+                }}
+                onFocus={() => setActiveKey(it.key)}
+                onBlur={!isCompact ? () => setActiveKey(undefined) : undefined}
+                aria-label={it.title}
+              />
                 );
               })}
             </div>
