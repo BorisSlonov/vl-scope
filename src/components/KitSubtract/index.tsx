@@ -88,8 +88,9 @@ const KitSubtract = () => {
   const [progress, setProgress] = useState(0);
   const [activeKey, setActiveKey] = useState<string | undefined>();
   const [isCompact, setIsCompact] = useState(false); // <=1359px
-  const skipClickRef = useRef(false);
   const centerRef = useRef<HTMLDivElement | null>(null);
+  const didAutoActivateRef = useRef(false);
+  const [isPhone, setIsPhone] = useState(false);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -128,6 +129,43 @@ const KitSubtract = () => {
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
+
+  // detect phone (coarse pointer + narrow width)
+  useEffect(() => {
+    const update = () => {
+      const coarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+      setIsPhone(coarse && window.innerWidth <= 768);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  // auto-activate first dot when it appears on phones
+  useEffect(() => {
+    if (!isPhone) return;
+    if (didAutoActivateRef.current) return;
+    if (activeKey) return;
+    const first = items[0];
+    const appear = Math.max(0, Math.min(1, (progress - first.appearAt) / 0.08));
+    if (appear > 0.2) {
+      didAutoActivateRef.current = true;
+      setActiveKey(first.key);
+    }
+  }, [isPhone, progress, activeKey]);
+
+  // hide any active card when all dots are invisible (e.g., scrolled above sequence)
+  useEffect(() => {
+    if (!isCompact) return;
+    if (!activeKey) return;
+    const anyVisible = items.some((it) => {
+      const a = Math.max(0, Math.min(1, (progress - it.appearAt) / 0.08));
+      return a > 0.05;
+    });
+    if (!anyVisible) {
+      setActiveKey(undefined);
+    }
+  }, [isCompact, progress, activeKey]);
 
   // Close card on outside tap in compact mode
   useEffect(() => {
@@ -186,6 +224,7 @@ const KitSubtract = () => {
                       ...(it.dotStyle as any),
                     }}
                     data-kit-interactive="true"
+                    type="button"
                     // Desktop hover
                     onMouseEnter={
                       !isCompact ? () => setActiveKey(it.key) : undefined
@@ -193,24 +232,17 @@ const KitSubtract = () => {
                     onMouseLeave={
                       !isCompact ? () => setActiveKey(undefined) : undefined
                     }
-                    // Pointer and touch support (mobile hover simulation)
-                    onPointerEnter={() => setActiveKey(it.key)}
-                    onPointerLeave={
-                      !isCompact ? () => setActiveKey(undefined) : undefined
+                    // Compact (mobile): tap toggles card
+                    onClick={
+                      isCompact
+                        ? () =>
+                            setActiveKey((k) =>
+                              k === it.key ? undefined : it.key
+                            )
+                        : undefined
                     }
-                    onTouchStart={() => {
-                      skipClickRef.current = true;
-                      setActiveKey((k) => (k === it.key ? undefined : it.key));
-                    }}
-                    onClick={() => {
-                      if (skipClickRef.current) {
-                        // prevent duplicate click after touchstart
-                        skipClickRef.current = false;
-                        return;
-                      }
-                      setActiveKey((k) => (k === it.key ? undefined : it.key));
-                    }}
-                    onFocus={() => setActiveKey(it.key)}
+                    // Keyboard accessibility
+                    onFocus={() => (!isCompact ? setActiveKey(it.key) : undefined)}
                     onBlur={
                       !isCompact ? () => setActiveKey(undefined) : undefined
                     }

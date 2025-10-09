@@ -5,6 +5,7 @@
     position: relative;
     background-color: #000;
     color-scheme: light;
+    isolation: isolate;
 }
 
 .section::before {
@@ -16,6 +17,27 @@
     background-position: center;
     z-index: 2;
     opacity: 0;
+    background-color: transparent;
+    pointer-events: none;
+    will-change: opacity;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+.section::after {
+    content: '';
+    position: absolute;
+    right: 15%;
+    top: 0;
+    width: 900px;
+    height: 900px;
+    border-radius: 996px;
+    background: linear-gradient(66deg, #8F6ED4 0%, #5355EE 100%);
+    filter: blur(150px);
+    z-index: 1;
+    pointer-events: none;
 }
 
 .circleShade {
