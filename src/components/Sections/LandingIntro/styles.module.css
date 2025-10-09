@@ -35,7 +35,7 @@
     height: 900px;
     border-radius: 996px;
     background: linear-gradient(66deg, #8F6ED4 0%, #5355EE 100%);
-    filter: blur(150px);
+    filter: blur(20px);
     z-index: 1;
     pointer-events: none;
 }
