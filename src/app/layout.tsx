@@ -55,7 +55,8 @@ export default function RootLayout({
           display: "flex",
           flexDirection: "column",
           position: "relative",
-          colorScheme: "dark",
+          // Force light color-scheme to avoid iOS auto-dark adjustments
+          colorScheme: "light",
         }}
       >
         {/* Global helpers: fixed viewport height + Lenis */}
