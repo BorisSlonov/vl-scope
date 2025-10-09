@@ -148,6 +148,7 @@ const KitSubtract = () => {
 
   return (
     <section className={s.section} id="kit" ref={sectionRef}>
+      <div className={s.circlesShade} />
       <div className={s.scrollSpace} />
       <div className={s.sticky}>
         <div className={s.centerArea} ref={centerRef}>
@@ -174,37 +175,47 @@ const KitSubtract = () => {
                 );
                 const isActive = activeKey === it.key;
                 return (
-              <button
-                key={`dot-${it.key}`}
-                className={`${s.dot} ${isActive ? s.active : ""}`}
-                style={{
-                  opacity: appear,
-                  transform: `translate(-50%, -50%) scale(${0.8 + 0.2 * appear})`,
-                  ...(it.dotStyle as any),
-                }}
-                data-kit-interactive="true"
-                // Desktop hover
-                onMouseEnter={!isCompact ? () => setActiveKey(it.key) : undefined}
-                onMouseLeave={!isCompact ? () => setActiveKey(undefined) : undefined}
-                // Pointer and touch support (mobile hover simulation)
-                onPointerEnter={() => setActiveKey(it.key)}
-                onPointerLeave={!isCompact ? () => setActiveKey(undefined) : undefined}
-                onTouchStart={() => {
-                  skipClickRef.current = true;
-                  setActiveKey((k) => (k === it.key ? undefined : it.key));
-                }}
-                onClick={() => {
-                  if (skipClickRef.current) {
-                    // prevent duplicate click after touchstart
-                    skipClickRef.current = false;
-                    return;
-                  }
-                  setActiveKey((k) => (k === it.key ? undefined : it.key));
-                }}
-                onFocus={() => setActiveKey(it.key)}
-                onBlur={!isCompact ? () => setActiveKey(undefined) : undefined}
-                aria-label={it.title}
-              />
+                  <button
+                    key={`dot-${it.key}`}
+                    className={`${s.dot} ${isActive ? s.active : ""}`}
+                    style={{
+                      opacity: appear,
+                      transform: `translate(-50%, -50%) scale(${
+                        0.8 + 0.2 * appear
+                      })`,
+                      ...(it.dotStyle as any),
+                    }}
+                    data-kit-interactive="true"
+                    // Desktop hover
+                    onMouseEnter={
+                      !isCompact ? () => setActiveKey(it.key) : undefined
+                    }
+                    onMouseLeave={
+                      !isCompact ? () => setActiveKey(undefined) : undefined
+                    }
+                    // Pointer and touch support (mobile hover simulation)
+                    onPointerEnter={() => setActiveKey(it.key)}
+                    onPointerLeave={
+                      !isCompact ? () => setActiveKey(undefined) : undefined
+                    }
+                    onTouchStart={() => {
+                      skipClickRef.current = true;
+                      setActiveKey((k) => (k === it.key ? undefined : it.key));
+                    }}
+                    onClick={() => {
+                      if (skipClickRef.current) {
+                        // prevent duplicate click after touchstart
+                        skipClickRef.current = false;
+                        return;
+                      }
+                      setActiveKey((k) => (k === it.key ? undefined : it.key));
+                    }}
+                    onFocus={() => setActiveKey(it.key)}
+                    onBlur={
+                      !isCompact ? () => setActiveKey(undefined) : undefined
+                    }
+                    aria-label={it.title}
+                  />
                 );
               })}
             </div>
@@ -216,9 +227,17 @@ const KitSubtract = () => {
               0,
               Math.min(1, (progress - it.appearAt) / 0.08)
             );
-            const appear = isCompact ? (activeKey === it.key ? 1 : 0) : seqAppear;
+            const appear = isCompact
+              ? activeKey === it.key
+                ? 1
+                : 0
+              : seqAppear;
             const isActive = activeKey === it.key;
-            const centerStyle = { left: "50%", top: "18%", transform: "translateX(-50%)" } as const;
+            const centerStyle = {
+              left: "50%",
+              top: "18%",
+              transform: "translateX(-50%)",
+            } as const;
             return (
               <KitItemCard
                 key={it.key}
@@ -226,9 +245,12 @@ const KitSubtract = () => {
                 count={it.count}
                 side={isCompact ? "center" : it.side}
                 appear={appear}
-                style={(isCompact ? (centerStyle as any) : (it.cardStyle as any))}
+                style={isCompact ? (centerStyle as any) : (it.cardStyle as any)}
                 active={isActive}
-                {...(!isCompact && { onEnter: () => setActiveKey(it.key), onLeave: () => setActiveKey(undefined) })}
+                {...(!isCompact && {
+                  onEnter: () => setActiveKey(it.key),
+                  onLeave: () => setActiveKey(undefined),
+                })}
               />
             );
           })}

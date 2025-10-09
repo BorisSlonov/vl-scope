@@ -3,7 +3,43 @@
   position: relative;
   height: 600vh;
   /* long scroll to play the sequence */
-  background-color: rgba(95, 61, 186, 0.25);
+  background-color: #040404
+}
+
+.circlesShade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.circlesShade::before,
+.circlesShade::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(200px);
+  width: 1200px;
+  height: 1200px;
+  z-index: 1;
+  background: linear-gradient(66deg, #8F6ED4 0%, #5355EE 100%), linear-gradient(97deg, #00B98C 2.69%, #005E5E 98.45%);
+}
+
+.circlesShade::before {
+  top: 20%;
+  bottom: auto;
+  left: -600px;
+  right: auto;
+}
+
+.circlesShade::before {
+  top: auto;
+  bottom: 10%;
+  left: auto;
+  right: -50%;
 }
 
 .scrollSpace {
