@@ -14,6 +14,10 @@ export default function ViewportUnitsFix() {
 
   useEffect(() => {
     const root = document.documentElement;
+    const isTelegram = /Telegram/i.test(navigator.userAgent || "");
+    if (isTelegram) {
+      root.classList.add("ua-telegram");
+    }
 
     const get1vh = () => (window.visualViewport?.height ?? window.innerHeight) / 100;
     const getOrientation = () => (window.matchMedia("(orientation: portrait)").matches ? "portrait" : "landscape");
@@ -46,9 +50,12 @@ export default function ViewportUnitsFix() {
         return;
       }
       // Keep the smallest height seen to avoid jumps when bars collapse/expand
-      if (stableRef.current == null || vh < stableRef.current) {
-        stableRef.current = vh;
-        applyStable(vh);
+      // In Telegram in-app browser freeze stable height within same orientation
+      if (!isTelegram) {
+        if (stableRef.current == null || vh < stableRef.current) {
+          stableRef.current = vh;
+          applyStable(vh);
+        }
       }
     };
 
