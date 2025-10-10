@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -34,6 +34,15 @@ export const metadata: Metadata = {
       },
     ],
   },
+};
+
+// Ensure mobile keyboards and browser UI resize the visual viewport
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  interactiveWidget: "resizes-visual",
+  themeColor: "#040404",
 };
 
 export default function RootLayout({

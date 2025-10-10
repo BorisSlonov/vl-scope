@@ -96,8 +96,17 @@
 .body {
     position: relative;
     z-index: 3;
+    /* Robust full-height minus header (80px) */
+    /* legacy + JS fallback */
+    min-height: calc(var(--app-100vh, 100vh) - 80px);
+    /* dynamic var (JS helper) */
+    min-height: calc(var(--app-1dvh, 1vh) * 100 - 80px);
+    /* modern units chain */
     min-height: calc(100svh - 80px);
+    min-height: calc(100dvh - 80px);
     padding: 40px 0;
+    /* keep CTA clear of the bottom bar on iOS */
+    padding-bottom: calc(40px + env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
     justify-content: space-between;

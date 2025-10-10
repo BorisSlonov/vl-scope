@@ -98,7 +98,7 @@ const KitSubtract = () => {
 
     const onScroll = () => {
       const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
+      const vh = (window.visualViewport?.height ?? window.innerHeight) || 0;
       const total = el.offsetHeight - vh; // scrollable distance of this section
       const passed = Math.min(Math.max(vh - rect.top, 0), total);
       const p = total > 0 ? passed / total : 0;

@@ -12,15 +12,27 @@ html {
   scroll-padding-top: 80px;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   display: flex;
   flex-direction: column;
-  /* Fill visible viewport height (dynamic), with stable fallback */
-  min-height: calc(var(--app-1dvh, 1vh) * 100);
-  min-height: 100dvh;
+  /* Fill visible viewport height with robust fallbacks */
+  /* 1) legacy fallback (and JS/WebView fallback var) */
   min-height: var(--app-100vh, 100vh);
+  /* 2) dynamic var fallback for browsers without dvh but with JS helper */
+  min-height: calc(var(--app-1dvh, 1vh) * 100);
+  /* 3) modern units — prefer stable small first to avoid jumps on load */
+  min-height: 100svh;
+  /* 4) final: follow visible viewport after UI bars collapse/expand */
+  min-height: 100dvh;
   align-items: center;
   background: var(--dark, #040404);
+  /* keep bottom content clear of iOS home indicator */
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 main {
@@ -196,4 +208,14 @@ h6 {
   .h2 {
     font-size: 20px;
   }
+}
+
+/* Utilities */
+.vfull {
+  /* cross-browser full viewport block size */
+  block-size: var(--app-100vh, 100vh);
+  block-size: calc(var(--app-1dvh, 1vh) * 100);
+  block-size: 100svh;
+  block-size: 100dvh;
+  max-block-size: 100lvh;
 }

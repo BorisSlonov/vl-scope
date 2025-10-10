@@ -8,6 +8,8 @@
     background-color: rgba(0, 0, 0, 0.7);
     animation: fadeInOverlay 0.3s ease-in-out forwards;
     padding: 10px;
+    /* keep content clear of safe-area on mobile */
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
@@ -20,6 +22,10 @@
     animation: fadeIn 0.3s ease-in-out forwards;
 
     width: min(1360px, calc(100vw - 48px));
+    /* robust visible-viewport max-height */
+    max-height: calc(var(--app-100vh, 100vh) - 48px);
+    max-height: calc(var(--app-1dvh, 1vh) * 100 - 48px);
+    max-height: calc(100svh - 48px);
     max-height: calc(100dvh - 48px);
 
 }

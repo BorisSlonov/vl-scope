@@ -11,7 +11,13 @@
   transition: all 0.3s;
   display: none;
   padding: 16px;
-  min-height: 100vh;
+  /* robust full-height for the overlay menu */
+  min-height: var(--app-100vh, 100vh);
+  min-height: calc(var(--app-1dvh, 1vh) * 100);
+  min-height: 100svh;
+  min-height: 100dvh;
+  /* avoid overlap with iOS home indicator */
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
 }
 
 .logoLink {

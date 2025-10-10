@@ -20,7 +20,7 @@ const DigitalAlignment = () => {
       const el = sectionRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      const viewportH = window.innerHeight || 0;
+      const viewportH = (window.visualViewport?.height ?? window.innerHeight) || 0;
       const sectionCenterDelta = viewportH / 2 - (rect.top + rect.height / 2);
       const normalized = sectionCenterDelta / viewportH; // ~[-1,1]
       const offset1 = Math.max(-20, Math.min(20, normalized * 20));

@@ -52,7 +52,9 @@
   position: sticky;
   top: 0;
   /* Fill visible viewport height to avoid bottom gap when bars hide */
+  height: var(--app-100vh, 100vh);
   height: calc(var(--app-1dvh, 1vh) * 100);
+  height: 100svh;
   height: 100dvh;
   /* final fallback for modern browsers */
   overflow: clip;
