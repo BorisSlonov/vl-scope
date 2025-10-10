@@ -22,11 +22,10 @@
     animation: fadeIn 0.3s ease-in-out forwards;
 
     width: min(1360px, calc(100vw - 48px));
-    /* robust visible-viewport max-height */
-    max-height: calc(var(--app-100vh, 100vh) - 48px);
+    /* robust visible-viewport max-height (stable order for Telegram in-app) */
     max-height: calc(var(--app-1dvh, 1vh) * 100 - 48px);
+    max-height: calc(var(--app-100vh, 100vh) - 48px);
     max-height: calc(100svh - 48px);
-    max-height: calc(100dvh - 48px);
 
 }
 

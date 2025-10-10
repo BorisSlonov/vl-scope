@@ -96,12 +96,12 @@
 .body {
     position: relative;
     z-index: 3;
-    /* Robust full-height minus header (80px) — STABLE baseline (no growth when bars hide) */
-    /* legacy + JS fallback (stable */
-    min-height: calc(var(--app-100vh, 100vh) - 80px);
-    /* optional dynamic var, but keep stable as winner by placing below */
+    /* Robust full-height minus header (80px) — STABLE order for Telegram in-app */
+    /* dynamic helper first (will be overridden) */
     min-height: calc(var(--app-1dvh, 1vh) * 100 - 80px);
-    /* stable modern unit */
+    /* stable var next so it wins when 100svh unsupported */
+    min-height: calc(var(--app-100vh, 100vh) - 80px);
+    /* stable modern unit last when supported */
     min-height: calc(100svh - 80px);
     padding: 40px 0;
     /* keep CTA clear of the bottom bar on iOS */

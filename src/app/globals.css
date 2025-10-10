@@ -21,14 +21,12 @@ body {
   display: flex;
   flex-direction: column;
   /* Fill visible viewport height with robust fallbacks */
-  /* 1) legacy fallback (and JS/WebView fallback var) */
-  min-height: var(--app-100vh, 100vh);
-  /* 2) dynamic var fallback for browsers without dvh but with JS helper */
+  /* 1) dynamic helper (will be overridden below to stay stable where svh unsupported) */
   min-height: calc(var(--app-1dvh, 1vh) * 100);
-  /* 3) modern units — prefer stable small first to avoid jumps on load */
+  /* 2) stable JS/WebView fallback — last supported wins if svh missing (e.g., Telegram) */
+  min-height: var(--app-100vh, 100vh);
+  /* 3) modern stable unit — overrides when supported */
   min-height: 100svh;
-  /* 4) final: follow visible viewport after UI bars collapse/expand */
-  min-height: 100dvh;
   align-items: center;
   background: var(--dark, #040404);
   /* keep bottom content clear of iOS home indicator */

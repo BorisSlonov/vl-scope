@@ -52,9 +52,9 @@
   position: sticky;
   top: 0;
   /* Fill visible viewport height to avoid bottom gap when bars hide */
-  /* STABLE height: keep 100svh as final winner to avoid jerky growth */
-  height: var(--app-100vh, 100vh);
+  /* Order ensures stability in Telegram in-app: dynamic -> stable var -> 100svh */
   height: calc(var(--app-1dvh, 1vh) * 100);
+  height: var(--app-100vh, 100vh);
   height: 100svh;
   /* final fallback for modern browsers */
   overflow: clip;
