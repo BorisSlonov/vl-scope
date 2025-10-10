@@ -60,6 +60,11 @@
   overflow: clip;
 }
 
+/* Telegram in-app browser: freeze sticky height */
+:global(html.ua-telegram) .sticky {
+  height: var(--app-100vh, 100vh) !important;
+}
+
 .centerArea {
   max-width: 1800px;
   margin: 0 auto;

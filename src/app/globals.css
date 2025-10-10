@@ -33,6 +33,11 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
+/* Telegram in-app browser: hard-freeze body height to stable var */
+html.ua-telegram body {
+  min-height: var(--app-100vh, 100vh) !important;
+}
+
 main {
   flex-grow: 1;
 }
@@ -210,10 +215,7 @@ h6 {
 
 /* Utilities */
 .vfull {
-  /* cross-browser full viewport block size */
-  block-size: var(--app-100vh, 100vh);
   block-size: calc(var(--app-1dvh, 1vh) * 100);
+  block-size: var(--app-100vh, 100vh);
   block-size: 100svh;
-  block-size: 100dvh;
-  max-block-size: 100lvh;
 }

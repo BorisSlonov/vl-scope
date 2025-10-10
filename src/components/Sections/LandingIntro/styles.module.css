@@ -111,6 +111,11 @@
     justify-content: space-between;
 }
 
+/* Telegram in-app browser: freeze height to stable var */
+:global(html.ua-telegram) .body {
+    min-height: calc(var(--app-100vh, 100vh) - 80px) !important;
+}
+
 .item_top {
     display: flex;
     flex-direction: column;
