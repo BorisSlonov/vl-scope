@@ -193,7 +193,8 @@ const KitSubtract = () => {
           <div
             className={s.kitWrap}
             style={{
-              transform: `translate3d(-50%, calc(-50% + ${raiseY} * var(--app-1dvh, 1vh)), 0)`,
+              // Prefer stable 1vh to avoid jumps when mobile UI bars hide
+              transform: `translate3d(-50%, calc(-50% + ${raiseY} * var(--app-1vh, var(--app-1dvh, 1vh))), 0)`,
             }}
           >
             <Image

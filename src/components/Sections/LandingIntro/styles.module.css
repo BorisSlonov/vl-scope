@@ -96,14 +96,13 @@
 .body {
     position: relative;
     z-index: 3;
-    /* Robust full-height minus header (80px) */
-    /* legacy + JS fallback */
+    /* Robust full-height minus header (80px) — STABLE baseline (no growth when bars hide) */
+    /* legacy + JS fallback (stable */
     min-height: calc(var(--app-100vh, 100vh) - 80px);
-    /* dynamic var (JS helper) */
+    /* optional dynamic var, but keep stable as winner by placing below */
     min-height: calc(var(--app-1dvh, 1vh) * 100 - 80px);
-    /* modern units chain */
+    /* stable modern unit */
     min-height: calc(100svh - 80px);
-    min-height: calc(100dvh - 80px);
     padding: 40px 0;
     /* keep CTA clear of the bottom bar on iOS */
     padding-bottom: calc(40px + env(safe-area-inset-bottom));

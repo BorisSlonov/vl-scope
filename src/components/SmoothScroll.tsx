@@ -19,10 +19,27 @@ export default function SmoothScroll() {
     };
     rafId = requestAnimationFrame(raf);
 
+    // Keep Lenis measurements in sync with visual viewport changes
+    let queued = false;
+    const onResize = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        (lenis as any).resize?.();
+      });
+    };
+    window.addEventListener("resize", onResize);
+    window.visualViewport?.addEventListener("resize", onResize);
+    window.addEventListener("orientationchange", onResize);
+
     return () => {
       cancelAnimationFrame(rafId);
       // @ts-ignore lenis has destroy in runtime
       lenis.destroy?.();
+      window.removeEventListener("resize", onResize);
+      window.visualViewport?.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onResize);
     };
   }, []);
 
